@@ -1,12 +1,12 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget
-from PyQt5.QtWebEngineWidgets import QWebEngineView
+from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget # type: ignore
+from PyQt6.QtWebEngineWidgets import QWebEngineView # type: ignore
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('PyQt5 + HTML Example')
+        self.setWindowTitle('PyQt6 + HTML Example')
 
         # Cria um widget central
         central_widget = QWidget()
@@ -24,15 +24,14 @@ class MainWindow(QMainWindow):
             <!DOCTYPE html>
             <html>
             <head>
-                <title>PyQt5 + HTML</title>
+                <title>PyQt6 + HTML</title>
             </head>
             <body>
                 <h1>Olá, Mundo!</h1>
-                <p>Este é um exemplo de conteúdo HTML renderizado em uma aplicação PyQt5.</p>
+                <p>Este é um exemplo de conteúdo HTML renderizado em uma aplicação PyQt6.</p>
             </body>
             </html>
         ''')
-
 
         # Adiciona QWebEngineView ao layout
         layout.addWidget(self.web_view)
@@ -40,4 +39,4 @@ class MainWindow(QMainWindow):
 app = QApplication(sys.argv)
 window = MainWindow()
 window.show()
-sys.exit(app.exec_())
+sys.exit(app.exec())
