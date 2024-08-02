@@ -1,7 +1,8 @@
 import json
 from typing import List, Dict
-from scripts.characters import NewCharacter
-from scripts.world import NewWorld
+
+from game.scripts.characters.new_character import NewCharacter
+from game.scripts.world.new_world import NewWorld
 
 
 class Game:

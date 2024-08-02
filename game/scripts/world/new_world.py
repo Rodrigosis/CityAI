@@ -1,3 +1,7 @@
+from typing import List
+
+from game.scripts.world.city.new_city import NewCity
+from game.scripts.world.world_characteristics import WorldCharacteristics
 
 
 class NewWorld:
@@ -11,7 +15,7 @@ class NewWorld:
                  week: int = 0, 
                  year: int = 0, 
                  season: str = 'winter',
-                 map: Map = Map(),
+                 cities: List[NewCity] = [],
                  world_characteristics: WorldCharacteristics = WorldCharacteristics()) -> None:
         self.id = id
         self.world_name = world_name
@@ -22,7 +26,7 @@ class NewWorld:
         self.week = week
         self.year = year
         self.season = season
-        self.map = map
+        self.cities = cities
         self.world_characteristics = world_characteristics
 
     def update_calendar(self):
@@ -48,6 +52,7 @@ class NewWorld:
         return str(self.to_dict())
 
     def to_dict(self):
+        cities_list = [i.to_dict() for i in self.cities]
         return {
             "id": self.id,
             "world_name": self.world_name,
@@ -58,12 +63,13 @@ class NewWorld:
             "week": self.week,
             "year": self.year,
             "season": self.season,
-            "map": self.map.to_dict(),
+            "cities": cities_list,
             "world_characteristics": self.world_characteristics.to_dict()
         }
     
     @classmethod
     def from_dict(cls, data):
+        cities_list = [NewCity.from_dict(i) for i in data['cities']]
         return cls(
             id=data["id"],
             world_name=data["world_name"],
@@ -74,6 +80,6 @@ class NewWorld:
             week=data["week"],
             year=data["year"],
             season=data["season"],
-            map=data['map'],
+            cities=cities_list,
             world_characteristics=WorldCharacteristics.from_dict(data['world_characteristics'])
         )
