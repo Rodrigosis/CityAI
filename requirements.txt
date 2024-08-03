@@ -2,3 +2,4 @@ flake8~=3.8.1
 coverage~=5.1
 pytest~=6.2.2
 PyQt6 PyQt6-WebEngine
+watchdog
