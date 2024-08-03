@@ -1,14 +1,13 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget # type: ignore
-from PyQt6.QtWebEngineWidgets import QWebEngineView # type: ignore
+from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget, QMessageBox
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('PyQt6 + HTML Example')
+        self.setWindowTitle("Página Inicial do Jogo")
 
-        # Cria um widget central
+        # Widget central
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
 
@@ -16,26 +15,39 @@ class MainWindow(QMainWindow):
         layout = QVBoxLayout()
         central_widget.setLayout(layout)
 
-        # Cria uma instância de QWebEngineView
-        self.web_view = QWebEngineView()
+        # Botões
+        start_button = QPushButton("Start")
+        start_button.clicked.connect(self.start_game)
+        layout.addWidget(start_button)
 
-        # Carrega uma página HTML
-        self.web_view.setHtml('''
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <title>PyQt6 + HTML</title>
-            </head>
-            <body>
-                <h1>Olá, Mundo!</h1>
-                <p>Este é um exemplo de conteúdo HTML renderizado em uma aplicação PyQt6.</p>
-            </body>
-            </html>
-        ''')
+        load_button = QPushButton("Load")
+        load_button.clicked.connect(self.load_game)
+        layout.addWidget(load_button)
 
-        # Adiciona QWebEngineView ao layout
-        layout.addWidget(self.web_view)
+        exit_button = QPushButton("Exit")
+        exit_button.clicked.connect(self.exit_game)
+        layout.addWidget(exit_button)
 
+        start_button.setStyleSheet("background-color: #4CAF50; color: white; font-size: 16px;")
+        load_button.setStyleSheet("background-color: #2196F3; color: white; font-size: 16px;")
+        exit_button.setStyleSheet("background-color: #f44336; color: white; font-size: 16px;")
+        
+    def start_game(self):
+        QMessageBox.information(self, "Start Game", "Starting the game...")
+        # Aqui você pode adicionar a lógica para iniciar o jogo
+
+    def load_game(self):
+        QMessageBox.information(self, "Load Game", "Loading the game...")
+        # Aqui você pode adicionar a lógica para carregar o jogo
+
+    def exit_game(self):
+        QMessageBox.information(self, "Exit Game", "Exiting the game...")
+        # Aqui você pode adicionar a lógica para sair do jogo
+        QApplication.instance().quit()
+
+
+
+# Inicialização da aplicação
 app = QApplication(sys.argv)
 window = MainWindow()
 window.show()
