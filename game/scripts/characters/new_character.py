@@ -1,12 +1,12 @@
-from game.scripts.characters.characteristics.core_characteristics import CoreCharacteristics
-from game.scripts.characters.characteristics.lewd_characteristics import LewdCharacteristics
-from game.scripts.characters.characteristics.sex_interest import SexInterest
-from game.scripts.characters.characteristics.status import CharacterStatus
-from game.scripts.characters.characteristics.traits import CharacterTraits
-from game.scripts.characters.skills.skills import Skills
-from game.scripts.characters.skills.sex_skills import SexSkills
-from game.scripts.characters.skills.school_skills import SchoolPerformance
-from game.scripts.characters.body import Body
+from scripts.characters.characteristics.core_characteristics import CoreCharacteristics
+from scripts.characters.characteristics.lewd_characteristics import LewdCharacteristics
+from scripts.characters.characteristics.sex_interest import SexInterest
+from scripts.characters.characteristics.status import CharacterStatus
+from scripts.characters.characteristics.traits import CharacterTraits
+from scripts.characters.skills.skills import Skills
+from scripts.characters.skills.sex_skills import SexSkills
+from scripts.characters.skills.school_skills import SchoolPerformance
+from scripts.characters.body import Body
 
 
 class NewCharacter:

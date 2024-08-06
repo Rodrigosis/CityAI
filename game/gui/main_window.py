@@ -2,8 +2,8 @@ import sys
 from PyQt6.QtWidgets import QMainWindow, QStackedWidget, QWidget, QHBoxLayout, QLabel  # type: ignore
 from PyQt6.QtCore import Qt  # type: ignore
 
-from game.gui.start_screen import StartScreen
-from game.gui.sidebar_screen import SidebarScreen
+from gui.start_screen import StartScreen
+from gui.sidebar_screen import SidebarScreen
 
 
 class MainWindow(QMainWindow):

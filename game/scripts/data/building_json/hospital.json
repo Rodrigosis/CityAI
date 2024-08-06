@@ -1,0 +1,30 @@
+{
+    "local_name": "hospital",
+    "percent": 2,
+    "jobs": [
+        {
+            "job_name": "medico",
+            "qtd_min": 1,
+            "qtd_max": 3,
+            "payment": 0,
+            "ability_to_climb": [],
+            "gender": "MF"
+        },
+        {
+            "job_name": "enfermeira ",
+            "qtd_min": 2,
+            "qtd_max": 5,
+            "payment": 0,
+            "ability_to_climb": []
+        }
+    ],
+    "sub_location": [
+        {
+            "sub_local_name": "bathroom",
+            "qtd_min": 1,
+            "qtd_max": 1,
+            "jobs": [],
+            "sub_location": []
+        }
+    ]
+}

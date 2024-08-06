@@ -1,31 +1,35 @@
 class WorldCharacteristics:
 
-    def __init__(self, economy: int = 1, violence: int = 1, corruption: int = 1, street_animals: int = 1, 
-                 monsters: int = 1) -> None:
-        self.economy = economy
-        self.violence = violence
-        self.corruption = corruption
-        self.street_animals = street_animals
-        self.monsters = monsters
+    def __init__(self, human_f: float = 0.4, human_m: float = 0.4, 
+                 animals_f: float = 0.09, animals_m: float = 0.09, 
+                 monsters_f: float = 0.01, monsters_m: float = 0.01) -> None:
+        self.human_f = human_f
+        self.human_m = human_m
+        self.animals_f = animals_f
+        self.animals_m = animals_m
+        self.monsters_f = monsters_f
+        self.monsters_m = monsters_m
     
     def __repr__(self):
         return str(self.to_dict())
 
     def to_dict(self):
         return {
-            "economy": self.economy,
-            "violence": self.violence,
-            "corruption": self.corruption,
-            "street_animals": self.street_animals,
-            "monsters": self.monsters
+            "human_f": self.human_f,
+            "human_m": self.human_m,
+            "animals_f": self.animals_f,
+            "animals_m": self.animals_m,
+            "monsters_f": self.monsters_f,
+            "monsters_m": self.monsters_m
         }
 
     @classmethod
     def from_dict(cls, data):
         return cls(
-            economy=data["economy"],
-            violence=data["violence"],
-            corruption=data["corruption"],
-            street_animals=data["street_animals"],
-            monsters=data["monsters"],
+            human_f=data["human_f"],
+            human_m=data["human_m"],
+            animals_f=data["animals_f"],
+            animals_m=data["animals_m"],
+            monsters_f=data["monsters_f"],
+            monsters_m=data["monsters_m"]
         )

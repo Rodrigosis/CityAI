@@ -1,10 +1,12 @@
-from game.scripts.world.city.streets.new_street import NewStreet
+from typing import List
+
+from scripts.world.city.streets.new_street import NewStreet
 
 
 class NewCity:
 
     def __init__(self, id: str = '', city_name: str = 'main_city', 
-                 streets: NewStreet[NewStreet] = []) -> None:
+                 streets: List[NewStreet] = []) -> None:
         self.id = id
         self.city_name = city_name
         self.streets = streets

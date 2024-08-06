@@ -1,6 +1,6 @@
 from typing import List
 
-from game.scripts.world.city.streets.buildings.new_building import Newbuilding
+from scripts.world.city.streets.buildings.new_building import Newbuilding
 
 
 class NewStreet:

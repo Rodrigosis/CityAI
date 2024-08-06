@@ -1,7 +1,7 @@
 from typing import List
 
-from game.scripts.world.city.new_city import NewCity
-from game.scripts.world.world_characteristics import WorldCharacteristics
+from scripts.world.city.new_city import NewCity
+from scripts.world.world_characteristics import WorldCharacteristics
 
 
 class NewWorld:
