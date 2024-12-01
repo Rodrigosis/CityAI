@@ -1,0 +1,12 @@
+{
+    "locations": [
+        {
+            "name": "Floresta",
+            "description": "Uma floresta densa e escura, com o som de folhas secas sendo pisadas ao longe.",
+            "exits": {
+                "norte": "Clareira",
+                "sul": "Rio"
+            }
+        }
+    ]
+}
