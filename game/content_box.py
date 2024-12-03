@@ -9,6 +9,7 @@ class ContentBox:
         self.color_1 = (90, 90, 90)
         self.color_2 = (50, 50, 50)
         self.color_3 = (255, 255, 255)
+        self.color_4 = (60, 200, 150)
 
         # Scroll positions
         self.scroll_y_player = 0
@@ -45,7 +46,7 @@ class ContentBox:
         pygame.draw.rect(surface, self.color_1, (x, y, width, height), border_radius=5)
 
         # Criando uma superfície para o conteúdo
-        content_surface = pygame.Surface((width, content_height))
+        content_surface = pygame.Surface((width, content_height - (self.margin * 2)))
         content_surface.fill(self.color_1)
 
         # Renderizando itens no conteúdo
@@ -54,8 +55,8 @@ class ContentBox:
             content_surface.blit(text_surface, (10, i * 30))
 
         # Mostrando conteúdo visível
-        visible_rect = pygame.Rect(0, self.scroll_y_player, width - 15, height)
-        surface.blit(content_surface, (x, y), visible_rect)
+        visible_rect = pygame.Rect(0, self.scroll_y_player, width - 15, height - (self.margin * 2))
+        surface.blit(content_surface, (x + self.margin, y + self.margin), visible_rect)
 
         # Adicionando a barra de scroll
         self.add_scroll(surface, x, y, width, height, content_height, self.scroll_y_player)
@@ -71,7 +72,7 @@ class ContentBox:
         pygame.draw.rect(surface, self.color_1, (x, y, width, height), border_radius=5)
 
         # Criando uma superfície para o conteúdo
-        content_surface = pygame.Surface((width, content_height))
+        content_surface = pygame.Surface((width, content_height - (self.margin * 2)))
         content_surface.fill(self.color_1)
 
         # Renderizando itens no conteúdo
@@ -80,8 +81,8 @@ class ContentBox:
             content_surface.blit(text_surface, (10, i * 30))
 
         # Mostrando conteúdo visível
-        visible_rect = pygame.Rect(0, self.scroll_y_characters, width - 15, height)
-        surface.blit(content_surface, (x, y), visible_rect)
+        visible_rect = pygame.Rect(0, self.scroll_y_characters, width - 15, height - (self.margin * 2))
+        surface.blit(content_surface, (x + self.margin, y + self.margin), visible_rect)
 
         # Adicionando a barra de scroll
         self.add_scroll(surface, x, y, width, height, content_height, self.scroll_y_characters)
@@ -94,11 +95,11 @@ class ContentBox:
         height = self.window_height - (self.margin * 2)
         x = 300 + (self.margin * 2)
         y = self.margin
-        content_height = 1200  # Altura do conteúdo interno
+        content_height = 1200 # height - (self.margin * 2)  # Altura do conteúdo interno
         pygame.draw.rect(surface, self.color_2, (x, y, width, height), border_radius=5)
 
         # Criando uma superfície para o conteúdo
-        content_surface = pygame.Surface((width, content_height))
+        content_surface = pygame.Surface((width, content_height - (self.margin * 2)))
         content_surface.fill(self.color_2)
 
         # Renderizando itens no conteúdo
@@ -107,8 +108,8 @@ class ContentBox:
             content_surface.blit(text_surface, (10, i * 30))
 
         # Mostrando conteúdo visível
-        visible_rect = pygame.Rect(0, self.scroll_y_midley, width - 15, height)
-        surface.blit(content_surface, (x, y), visible_rect)
+        visible_rect = pygame.Rect(0, self.scroll_y_midley, width - 15, height - (self.margin * 2))
+        surface.blit(content_surface, (x + self.margin, y + self.margin), visible_rect)
 
         # Adicionando a barra de scroll
         self.add_scroll(surface, x, y, width, height, content_height, self.scroll_y_midley)
