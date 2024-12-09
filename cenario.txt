@@ -1,0 +1,56 @@
+Para criar cenários únicos no jogo, você pode passar os seguintes parâmetros para o GPT:
+
+1. Nome do Cenário:
+Um título ou identificação breve do local.
+Exemplo: "Praça Abandonada", "Laboratório Secreto", "Rua Comercial Lotada".
+
+2. Descrição Visual:
+Detalhes que ajudam a imaginar o ambiente.
+Exemplo: iluminação (clara, sombria, névoa), cores predominantes, estilo arquitetônico, itens específicos no local.
+
+3. Clima e Atmosfera:
+Condições climáticas e a sensação geral do lugar.
+Exemplo: chuvoso, calor sufocante, silencioso e tenso, alegre e festivo.
+
+4. Elementos Sonoros:
+Sons que enriquecem a experiência imersiva.
+Exemplo: o canto de pássaros, o barulho de máquinas, o som distante de passos.
+
+5. Cheiros:
+Aromas ou odores característicos do local.
+Exemplo: cheiro de café fresco, mofo úmido, fumaça de carvão.
+
+6. Objetos ou Detalhes Relevantes:
+Itens específicos que o jogador pode notar ou interagir.
+Exemplo: um banco quebrado, uma pintura antiga, uma porta trancada.
+
+7. Eventos Ocorrendo:
+O que está acontecendo no local no momento.
+Exemplo: uma manifestação, máquinas operando, um NPC praticando algo.
+
+8. Emoção Associada ao Cenário:
+Sentimento que o cenário deve evocar.
+Exemplo: medo, nostalgia, curiosidade, urgência.
+
+9. Acessibilidade e Rota:
+Como o cenário se conecta a outros lugares e o que limita o jogador.
+Exemplo: escadas estreitas, uma ponte quebrada, múltiplas saídas.
+
+10. Histórias ou Lendas Locais:
+Um pano de fundo narrativo ou detalhes que dão profundidade ao lugar.
+Exemplo: "Essa praça era o coração da cidade até a grande enchente de 1980."
+
+
+Exemplo de Cenário:
+Nome: Parque da Aurora
+Descrição Visual: Um parque coberto por folhas secas, iluminado apenas pela luz mortiça de postes antigos. No centro, uma fonte rachada reflete a luz da lua.
+Clima e Atmosfera: Um frio cortante, com névoa densa cobrindo o chão.
+Elementos Sonoros: O som ocasional de folhas pisadas e o vento uivando entre os galhos secos.
+Cheiros: Um leve odor de terra molhada e madeira apodrecendo.
+Objetos Relevantes: Um banco de madeira riscado, um diário esquecido na fonte.
+Eventos: Um corvo pousa e observa o jogador silenciosamente.
+Emoção: Mistério e tensão.
+Acessibilidade: Trilhas cobertas de folhas levam a um portão enferrujado ou a uma cabana escondida.
+História: O parque era um ponto de encontro de jovens até ser abandonado após um desaparecimento inexplicável.
+
+Esses parâmetros tornam o cenário imersivo e memorável, permitindo que a IA crie descrições únicas e envolventes.

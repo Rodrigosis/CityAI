@@ -1,0 +1,42 @@
+Para que cada NPC tenha uma personalidade própria no jogo, você pode fornecer os seguintes parâmetros ao GPT para que ele incorpore a personalidade de cada personagem:
+
+Nome e Papel do NPC:
+Nome do personagem.
+
+Alcunha:
+Função ou papel dele no jogo (exemplo: ferreiro, vilão, guia sábio).
+
+Traços de Personalidade:
+Selecione características marcantes (exemplo: amigável, sarcástico, arrogante, bondoso, tímido, excêntrico).
+
+Motivações e Objetivos:
+O que move esse personagem? (exemplo: proteger sua vila, buscar vingança, acumular riquezas).
+
+História Pessoal:
+Um breve resumo da vida do NPC, incluindo experiências que moldaram sua personalidade.
+
+Estilo de Fala:
+Escolha um tom ou vocabulário que o NPC use (formal, gírias, poético, direto).
+
+Relação com o Jogador:
+Defina como o NPC reage ao jogador (amigável, desconfiado, manipulador).
+
+Limitações ou Peculiaridades:
+Detalhes únicos, como um tique verbal, medo específico ou habilidades incomuns.
+
+Humor e Emoções Predominantes:
+Tende a ser calmo, explosivo, otimista ou melancólico?
+
+Por exemplo:
+
+Nome: Bronn, o Mercador Desonesto
+Traços: Sarcástico, ganancioso, mas ocasionalmente generoso.
+Motivação: Enriquecer a qualquer custo.
+História: Começou como órfão nas ruas, aprendeu a sobreviver enganando os outros.
+Estilo de Fala: Usa gírias, fala rápido e insere piadas ácidas.
+Relação com o Jogador: Finge ser amigável, mas tenta enganar se for lucrativo.
+Peculiaridade: Odeia piadas sobre a sua altura (é baixinho).
+Humor: Geralmente relaxado, mas se torna irritado ao ser contrariado.
+
+
+Ao definir essas características, a IA consegue adaptar as interações de forma consistente, criando personagens únicos e memoráveis.

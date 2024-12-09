@@ -10,6 +10,7 @@ class ContentBox:
         self.color_2 = (50, 50, 50)
         self.color_3 = (255, 255, 255)
         self.color_4 = (60, 200, 150)
+        self.hover_color = (255, 0, 0)
 
         # Scroll positions
         self.scroll_y_player = 0
