@@ -20,14 +20,34 @@ class ContentBox:
         self.scroll_y_midley = 0
 
     def add_scroll(self, surface, x, y, width, height, content_height, scroll_y):
-        """Desenha a barra de scroll e ajusta o valor de scroll_y."""
+        """
+        Adiciona uma barra de rolagem a uma janela.
+
+        Parameters:
+        - surface: Superfície onde a barra será desenhada.
+        - x, y: Posições iniciais da janela.
+        - width, height: Dimensões da janela.
+        - content_height: Altura total do conteúdo interna da janela.
+        - scroll_y: Posição atual da rolagem.
+        """
         pygame.draw.rect(surface, (70, 70, 70), (x + width - 5, y, 5, height), border_radius=5)  # Fundo da barra
         scroll_bar_height = (height / content_height) * height
         scroll_bar_y = y + (scroll_y / content_height) * height
         pygame.draw.rect(surface, (150, 150, 150), (x + width - 5, scroll_bar_y, 5, scroll_bar_height), border_radius=5)  # Barra de rolagem
 
     def handle_scroll(self, event, scroll_y, content_height, view_height):
-        """Gerencia eventos de scroll para uma janela."""
+        """
+        Manipula eventos de rolagem do mouse para ajustar a posição de scroll.
+
+        Parameters:
+        - event: Evento do Pygame para detecção de scroll.
+        - scroll_y: Posição atual da rolagem.
+        - content_height: Altura total do conteúdo interno.
+        - view_height: Altura visível da janela.
+
+        Returns:
+        - Nova posição de scroll ajustada.
+        """
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 4:  # Scroll para cima
                 scroll_y = max(scroll_y - 20, 0)
@@ -36,11 +56,30 @@ class ContentBox:
         return scroll_y
 
     def is_mouse_over(self, x, y, width, height):
+        """
+        Verifica se o cursor do mouse está sobre uma área específica.
+
+        Parameters:
+        - x, y, width, height: Definem os limites da área.
+
+        Returns:
+        - True se o mouse estiver dentro das dimensões; False caso contrário.
+        """
         """Verifica se o mouse está sobre a janela."""
         mouse_x, mouse_y = pygame.mouse.get_pos()
         return x <= mouse_x <= x + width and y <= mouse_y <= y + height
 
     def player_status_box(self, surface, width: int = 300, height: int = 100):
+        """
+        Desenha a caixa de "Status do Jogador" e adiciona barra de scroll.
+
+        Parameters:
+        - surface: Superfície onde será desenhada.
+        - width, height: Largura e altura da caixa.
+
+        Returns:
+        - Dimensões e altura do conteúdo interno da caixa.
+        """
         font = pygame.font.Font(None, 24)
         height = self.window_height - (self.margin * 2)
         x = self.margin
@@ -67,6 +106,9 @@ class ContentBox:
         return x, y, width, height, content_height
 
     def characters_present_box(self, surface, width: int = 300, height: int = 100):
+        """
+        Desenha a caixa "Personagens Presentes" em uma área fixa do lado direito.
+        """
         font = pygame.font.Font(None, 24)
         height = self.window_height - 300 - (self.margin * 3)
         x = self.window_width - width - self.margin
@@ -93,6 +135,9 @@ class ContentBox:
         return x, y, width, height, content_height
 
     def midley_box(self, surface, width: int = 300, height: int = 300, content: List[str] = []):
+        """
+        Desenha a caixa central de conteúdo, permitindo texto formatado e quebra de linha automática.
+        """
         font = pygame.font.Font(None, 24)
         width = self.window_width - 600 - (self.margin * 4)
         height = self.window_height - (self.margin * 2)
@@ -134,12 +179,16 @@ class ContentBox:
         return x, y, width, height, content_height
 
     def maps_box(self, surface, width: int = 300, height: int = 300):
+
         x = self.window_width - width - self.margin
         y = self.window_height - height - self.margin
 
         pygame.draw.rect(surface=surface, color=(255, 255, 255), rect=(x, y, width, height), border_radius=5)
     
     def defini_posicao(self, x: list[str]) -> List[Tuple]:
+        """
+        Calcula as posições para organizar o texto em linhas, considerando limite de caracteres por linha.
+        """
         len_max = 80
         
         linhas = []
