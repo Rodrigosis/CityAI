@@ -1,4 +1,4 @@
-from flask import Flask, render_template_string
+from flask import Flask, render_template_string, render_template, url_for
 
 app = Flask(__name__)
 
@@ -115,7 +115,7 @@ def generate_full_html(player_status_html, midley_html, characters_present_html,
     """
 
 
-def generate_html_player_status(content, vida):
+def generate_html_player_status(content, vida, url_img):
     """
     Gera o conteúdo HTML para a caixa Player Status com uma barra de vida.
     """
@@ -126,7 +126,7 @@ def generate_html_player_status(content, vida):
     return f"""
     <div class="player-box">
         <div class="player-image">
-            <img src="test_img_player_200.png" alt="Imagem do jogador">
+            <img src="{url_img}" alt="Imagem do jogador">
         </div>
         {formatted_content}
         <div 
@@ -188,8 +188,10 @@ def index():
     characters_content = [f"Character {i}" for i in range(5)]
     map_content = "Este é o mapa"
 
+    url_img = url_for('static', filename='img/test_img_player_200.png')
+
     # Geração dos HTMLs individuais
-    player_status_html = generate_html_player_status(player_status_content, vida)
+    player_status_html = generate_html_player_status(player_status_content, vida, url_img)
     midley_html = generate_html_midley(midley_content)
     characters_present_html = generate_html_characters_present(characters_content)
     map_html = generate_html_map()
