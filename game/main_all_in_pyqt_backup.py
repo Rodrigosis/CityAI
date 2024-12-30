@@ -28,10 +28,14 @@ class MainGameWindow(QMainWindow):
 
         # Instanciando os painéis do jogo
 
+        content = ["Nivel: 10", "XP: 1500/2000", "Classe: Guerreiro"]
+        vida = 75  # 75% de vida
         player_status_box_content = [f"Player Status {i}." for i in range(50)]
+        player_status_box_content.insert(0, content)
         self.player_status_box = self.create_html_box(
-            "Player Status", self.generate_html_player_status(player_status_box_content)
+            "Player Status", self.generate_html_player_status(content, vida)
         )
+
         midley_box_content = [f"Texto de exemplo para o midley box {i}." for i in range(50)]
         self.midley_box = self.create_html_box(
             "Midley Box", self.generate_html_midley(midley_box_content)
@@ -127,20 +131,21 @@ class MainGameWindow(QMainWindow):
             font-size: 20px;
             font-weight: bold;
             color: black;
-            border-radius: 10px;
+            border-radius: 5px;
             """
         )
         return map_label
 
-    def generate_html_player_status(self, content: list) -> str:
+    def generate_html_player_status(self, content: list, vida: int) -> str:
         """
-        Gera o conteúdo HTML para a caixa Player Status.
+        Gera o conteúdo HTML para a caixa Player Status com uma barra de vida.
         :param content: Lista de itens de conteúdo.
+        :param vida: Percentual de vida do personagem (0 a 100).
         """
         formatted_content = "".join(
             f"<div class='player-text'>{item}</div>" for item in content
         )
-        return f"""
+        t = f"""
         <html>
         <head>
             <style>
@@ -154,13 +159,29 @@ class MainGameWindow(QMainWindow):
                     margin-bottom: 20px;
                 }}
                 .player-image {{
-                    width: 100%; /* A largura se ajusta dinamicamente */
-                    max-height: 200px; /* Altura máxima para evitar imagens gigantes */
-                    object-fit: contain; /* Ajusta sem cortar ou distorcer */
+                    width: 100%;
+                    max-height: 200px;
+                    object-fit: contain;
                     margin-bottom: 10px;
                 }}
                 .player-text {{
                     font-size: 16px;
+                }}
+                /* Estilos para a barra de vida */
+                .vida-bar {{
+                    width: 100%;
+                    height: 20px;
+                    background-color: #555;
+                    border: 1px solid #333;
+                    border-radius: 5px;
+                    margin-top: 10px;
+                    overflow: hidden;
+                }}
+                .vida-bar-inner {{
+                    width: {vida}%; /* Percentual de vida */
+                    height: 100%;
+                    background-color: {self.get_cor_vida(vida)};
+                    transition: width 0.3s ease-in-out; /* Suavidade na atualização */
                 }}
             </style>
         </head>
@@ -169,11 +190,30 @@ class MainGameWindow(QMainWindow):
                 <div class="player-box">
                     <img src="../img/test_img_player_200.png" class="player-image" />
                     {formatted_content}
+                    <!-- Barra de vida -->
+                    <div class="vida-bar">
+                        <div class="vida-bar-inner"></div>
+                    </div>
                 </div>
             </div>
         </body>
         </html>
         """
+        print(t)
+        return t
+
+    def get_cor_vida(self, vida: int) -> str:
+        """
+        Retorna a cor da barra de vida com base no percentual de vida.
+        :param vida: Percentual de vida do personagem.
+        :return: Código de cor em HEX.
+        """
+        if vida > 50:
+            return "#00FF00"  # Verde
+        elif vida > 20:
+            return "#FFFF00"  # Amarelo
+        else:
+            return "#FF0000"  # Vermelho
 
     def generate_html_midley(self, content: list) -> str:
         """
