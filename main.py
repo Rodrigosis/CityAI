@@ -1,113 +1,66 @@
-from flask import Flask, render_template_string, render_template, url_for
+from flask import Flask, render_template_string, render_template, url_for, jsonify, request
+from scipy.sparse import dia
+
+from game.tools.colors import get_cor_vida, get_stamina_color
 
 app = Flask(__name__)
 
+
+class World:
+    def __init__(self, name: str = "World", map_name: str = "Mapa 1", ano: int = 2023, mes: int = 8, dia: int = 12,
+                 hora: int = 18, minuto: int = 37):
+        self.name = name
+        self.map_name = map_name
+        self.ano = ano
+        self.mes = mes
+        self.dia = dia
+        self.hora = hora
+        self.minuto = minuto
+
+
+class Player:
+    def __init__(self, name: str = "Rodrigo", health: int = 100, stamina: int = 100, sanity: int = 100,
+                 strength: int = 1, dexterity: int = 1, charisma: int = 1, intelligence: int = 1, local: str = "Omaan"):
+        self.name = name
+        self.health = health
+        self.stamina = stamina
+        self.sanity = sanity
+        self.strength = strength
+        self.dexterity = dexterity
+        self.charisma = charisma
+        self.intelligence = intelligence
+        self.local = local
+
+
+player = Player("Rodrigo", 90)
+world = World()
 
 def generate_full_html(player_status_html, midley_html, characters_present_html, map_html):
     """
     Gera o HTML contendo todas as 4 caixas no layout em grid.
     """
+    js_script_url = url_for('static', filename='js/playerFunctions.js')
+    css_style_url = url_for('static', filename='css/style.css')
+
     return f"""
     <html>
     <head>
-        <style>
-            body {{
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                background-color: #2e2e2e;
-                color: white;
-                display: grid;
-                grid-template-columns: 2fr 3fr 2fr;
-                grid-template-rows: 3fr 2fr;
-                gap: 1rem;
-                height: 100vh;
-            }}
-            .box {{
-                background-color: #303030;
-                border: 2px solid #555;
-                border-radius: 8px;
-                padding: 10px;
-                overflow: auto;
-            }}
-            .map-box {{
-                background-color: white;
-                color: black;
-                font-weight: bold;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }}
-
-            /* Estilo das barras de scroll */
-            .box::-webkit-scrollbar {{
-                width: 10px;
-                height: 10px;
-            }}
-            .box::-webkit-scrollbar-thumb {{
-                background-color: #5e5e5e;
-                border-radius: 10px;
-                border: 2px solid #303030;
-            }}
-            .box::-webkit-scrollbar-thumb:hover {{
-                background-color: #787878;
-            }}
-            .box::-webkit-scrollbar-track {{
-                background-color: #404040;
-                border-radius: 10px;
-            }}
-
-            /* Estilo do botão */
-            .damage-button {{
-                margin-top: 15px;
-                padding: 10px 15px;
-                background-color: #ff0000;
-                color: white;
-                border: 1px solid #222;
-                border-radius: 5px;
-                font-size: 16px;
-                cursor: pointer;
-            }}
-            .damage-button:hover {{
-                background-color: #cc0000;
-            }}
-        </style>
-        <script>
-            let currentLife = 75;
-
-            function takeDamage(amount) {{
-                currentLife = Math.max(0, currentLife - amount);
-                const lifeBar = document.getElementById("player-life-bar");
-                lifeBar.style.width = currentLife + "%";
-
-                if (currentLife > 50) {{
-                    lifeBar.style.backgroundColor = "#00FF00";
-                }} else if (currentLife > 20) {{
-                    lifeBar.style.backgroundColor = "#FFFF00";
-                }} else {{
-                    lifeBar.style.backgroundColor = "#FF0000";
-                }}
-
-                lifeBar.title = `Vida Atual: $currentLife%`;
-            }}
-        </script>
+        <link rel="stylesheet" href="{css_style_url}">
+        <script src="{js_script_url}"></script>
     </head>
     <body>
         <div class="box" style="grid-column: 1; grid-row: span 2;">
-            <h3>Player Status</h3>
             {player_status_html}
         </div>
         <div class="box" style="grid-column: 2; grid-row: span 2;">
-            <h3>Midley Box</h3>
             {midley_html}
-            <button class="damage-button" onclick="takeDamage(10)">Tomar Dano (-10)</button>
+            <button class="damage-button" onclick="takeDamage(5)">Take Damage (-5)</button>
+            <button class="damage-button" onclick="takeStaminaDamage(5)">Take Stamina Damage (-5)</button>
         </div>
         <div class="box" style="grid-column: 3; grid-row: 1;">
-            <h3>Characters Present</h3>
             {characters_present_html}
         </div>
         <div class="box map-box" style="grid-column: 3; grid-row: 2;">
-            <h3>Mapa</h3>
             {map_html}
         </div>
     </body>
@@ -115,43 +68,51 @@ def generate_full_html(player_status_html, midley_html, characters_present_html,
     """
 
 
-def generate_html_player_status(content, vida, url_img):
+def generate_html_player_status(content, player: Player, url_img: str):
     """
-    Gera o conteúdo HTML para a caixa Player Status com uma barra de vida.
+    Gera o conteúdo HTML para a caixa Player Status com a barra de vida e stamina.
     """
     formatted_content = "".join(
         f"<div class='player-text'>{item}</div>" for item in content
     )
-    # <img src="Users/rodri/vs_code/CityAI/img/test_img_player_200.png" "style=width: 100%; height: 200px; object-fit: contain;">
     return f"""
+    <h4>{player.name.title()}</h4>
+    <h5>{player.local} {world.dia}/{world.mes}/{world.ano} {world.hora}:{world.minuto} $4121</h5>
     <div class="player-box">
         <div class="player-image">
             <img src="{url_img}" alt="Imagem do jogador">
         </div>
-        {formatted_content}
-        <div 
-            class="vida-bar" 
-            style="width: 100%; height: 20px; background-color: #555; border: 1px solid #333; border-radius: 5px; margin-top: 10px; overflow: hidden;">
+        <div>
+            <h4>Status</h4>
             <div 
-                id="player-life-bar"
-                title="Vida Atual: {vida}%" 
-                style="width: {vida}%; height: 100%; background-color: {get_cor_vida(vida)};">
+                class="health-bar" 
+                style="width: 100%; height: 10px; background-color: #555; border: 1px solid #333; border-radius: 5px; margin-top: 10px; overflow: hidden;">
+                <div 
+                    id="player-life-bar"
+                    title="Vida Atual: {player.health}%" 
+                    style="width: {player.health}%; height: 100%; background-color: {get_cor_vida(player.health)};">
+                </div>
             </div>
+            <div 
+                class="stamina-bar" 
+                style="width: 100%; height: 10px; background-color: #555; border: 1px solid #333; border-radius: 5px; margin-top: 10px; overflow: hidden;">
+                <div 
+                    id="player-stamina-bar"
+                    title="Stamina Atual: {player.stamina}%" 
+                    style="width: {player.stamina}%; height: 100%; background-color: {get_stamina_color(player.stamina)};">
+                </div>
+            </div>
+        </div>
+        <div>
+            <h4>Effects</h4>
+            <div>foo bar</div>
+        </div>
+        <div>
+            <h4>Attributes</h4>
+            <div>strength: {player.strength} dexterity: {player.dexterity} charisma: {player.charisma} intelligence: {player.intelligence}</div>
         </div>
     </div>
     """
-
-
-def get_cor_vida(vida):
-    """
-    Retorna a cor da barra de vida com base no percentual de vida.
-    """
-    if vida > 50:
-        return "#00FF00"  # Verde
-    elif vida > 20:
-        return "#FFFF00"  # Amarelo
-    else:
-        return "#FF0000"  # Vermelho
 
 
 def generate_html_midley(content):
@@ -159,7 +120,10 @@ def generate_html_midley(content):
     Gera o conteúdo HTML para a caixa Midley Box.
     """
     formatted_content = "".join(f"<div>{item}</div>" for item in content)
-    return f"<div>{formatted_content}</div>"
+    return f"""
+    <h3>Midley Box</h3>
+    <div>{formatted_content}</div>
+    """
 
 
 def generate_html_characters_present(content):
@@ -167,7 +131,10 @@ def generate_html_characters_present(content):
     Gera o conteúdo HTML para a caixa Characters Present.
     """
     formatted_content = "".join(f"<div>{item}</div>" for item in content)
-    return f"<div>{formatted_content}</div>"
+    return f"""
+    <h3>Characters Present</h3>
+    <div>{formatted_content}</div>
+    """
 
 
 def generate_html_map():
@@ -177,21 +144,32 @@ def generate_html_map():
     return "<div>Mapa do Jogo</div>"
 
 
+@app.route("/take_damage", methods=["POST"])
+def take_damage():
+    dano = request.json.get("damage", 0)  # Obter o dano do corpo da requisição
+    player.health = max(0, player.health - dano)  # Reduz a vida do jogador, garantindo que ela não fique negativa
+    new_color = get_cor_vida(player.health)
+    return jsonify({"health": player.health, "color": new_color})  # Retorna a nova vida em JSON
+
+@app.route("/take_stamina_damage", methods=["POST"])
+def take_stamina_damage():
+    dano = request.json.get("damage", 0)  # Obter o dano do corpo da requisição
+    player.stamina = max(0, player.stamina - dano)
+    print(player.stamina)# Reduz a vida do jogador, garantindo que ela não fique negativa
+    new_color = get_stamina_color(player.stamina)
+    return jsonify({"stamina": player.stamina, "color": new_color})  # Retorna a nova vida em JSON
+
 @app.route("/")
 def index():
-    # Conteúdo do Player Status
-    player_status_content = ["Nivel: 10", "XP: 1500/2000", "Classe: Guerreiro"]
-    vida = 75
-
     # Conteúdo para os widgets
     midley_content = [f"Midley Item {i}" for i in range(10)]
-    characters_content = [f"Character {i}" for i in range(5)]
+    characters_content = [f"Character {i}" for i in range(50)]
     map_content = "Este é o mapa"
 
     url_img = url_for('static', filename='img/test_img_player_200.png')
 
     # Geração dos HTMLs individuais
-    player_status_html = generate_html_player_status(player_status_content, vida, url_img)
+    player_status_html = generate_html_player_status([], player, url_img)
     midley_html = generate_html_midley(midley_content)
     characters_present_html = generate_html_characters_present(characters_content)
     map_html = generate_html_map()
