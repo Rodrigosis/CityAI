@@ -46,7 +46,7 @@ class MainGameWindow(QMainWindow):
         self.map_box = self.create_map_box()
 
         # Adicionando os widgets no grid layout (organização ajustada)
-        grid_layout.addWidget(self.player_status_box, 0, 0, 2, 1)  # Linha 0 e 1, coluna 0 (todo o lado esquerdo)
+        grid_layout.addWidget(self.player_status_box, 0, 0, 2, 1)  # Linha 0 e 1, coluna 0 (lado esquerdo)
         grid_layout.addWidget(self.midley_box, 0, 1, 2, 1)  # Linha 0 e 1, coluna 1 (centro)
         grid_layout.addWidget(self.characters_present_box, 0, 2)  # Linha 0, coluna 2 (topo direito)
         grid_layout.addWidget(self.map_box, 1, 2)  # Linha 1, coluna 2 (embaixo à direita)
