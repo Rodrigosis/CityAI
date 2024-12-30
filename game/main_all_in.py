@@ -71,7 +71,7 @@ class ContentBox:
 
     def player_status_box(self, surface, width: int = 300, height: int = 100):
         """
-        Desenha a caixa de "Status do Jogador" e adiciona barra de scroll.
+        Desenha a caixa de "Status do Jogador" com uma imagem no topo de cada texto e adiciona barra de scroll.
 
         Parameters:
         - surface: Superfície onde será desenhada.
@@ -80,27 +80,49 @@ class ContentBox:
         Returns:
         - Dimensões e altura do conteúdo interno da caixa.
         """
+        # Fonte para o texto
         font = pygame.font.Font(None, 24)
+
+        # Altura e posição da caixa
         height = self.window_height - (self.margin * 2)
         x = self.margin
         y = self.margin
-        content_height = 800  # Altura do conteúdo interno
+        content_height = 1000  # Altura do conteúdo interno ajustada para suportar todos os itens
+
+        # Desenhar o retângulo principal
         pygame.draw.rect(surface, self.color_1, (x, y, width, height), border_radius=5)
 
-        # Criando uma superfície para o conteúdo
-        content_surface = pygame.Surface((width, content_height - (self.margin * 2)))
+        # Criar superfície para o conteúdo
+        content_surface = pygame.Surface((width, content_height))
         content_surface.fill(self.color_1)
 
-        # Renderizando itens no conteúdo
-        for i in range(30):
-            text_surface = font.render(f"Player Status {i+1}", True, self.color_3)
-            content_surface.blit(text_surface, (10, i * 30))
+        # Carregar uma única vez a imagem
+        image = pygame.image.load("../img/test_img_player.png")  # Caminho da imagem
+        image = pygame.transform.scale(image, (160, 240))  # Redimensionar conforme necessário
+        image_height = image.get_height()
 
-        # Mostrando conteúdo visível
+        # Coordenadas da imagem
+        image_x = 50
+        image_y = 10   # Considera a imagem + espaço para o texto
+
+        # Desenhar a imagem
+        content_surface.blit(image, (image_x, image_y))
+
+        # Renderizar itens no conteúdo
+        for i in range(50):  # Ajuste o número de itens conforme necessário
+            # Coordenadas do texto
+            text_x = 10
+            text_y = (i * 30) + image_height + image_y + 10  # Espaço logo abaixo da imagem
+
+            # Renderizar o texto abaixo da imagem
+            text_surface = font.render(f"Player Status {i + 1}", True, self.color_3)
+            content_surface.blit(text_surface, (text_x, text_y))
+
+        # Exibir conteúdo visível (com corte baseado na rolagem)
         visible_rect = pygame.Rect(0, self.scroll_y_player, width - 15, height - (self.margin * 2))
         surface.blit(content_surface, (x + self.margin, y + self.margin), visible_rect)
 
-        # Adicionando a barra de scroll
+        # Adicionando a barra de rolagem
         self.add_scroll(surface, x, y, width, height, content_height, self.scroll_y_player)
 
         return x, y, width, height, content_height

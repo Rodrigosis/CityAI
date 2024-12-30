@@ -1,0 +1,37 @@
+        <html>
+        <head>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    color: #ffffff;
+                    background-color: #2e2e2e;
+                    padding: 10px;
+                }
+                .player-box {
+                    margin-bottom: 20px;
+                }
+                .player-image {
+                    width: 100%; /* A largura se ajusta dinamicamente */
+                    max-height: 200px; /* Altura máxima para evitar imagens gigantes */
+                    object-fit: contain; /* Ajusta sem cortar ou distorcer */
+                    margin-bottom: 10px;
+                }
+                .player-text {
+                    font-size: 16px;
+                }
+            </style>
+        </head>
+        <body>
+            <div>
+                <div class="player-box">
+                    <!-- Adicionado atributo style diretamente -->
+                    <img src="../img/test_img_player_200.png" class="player-image" style="max-height: 200px;" />
+                    <div class="player-text">Player Status 1</div>
+                </div>
+                <div class="player-box">
+                    <div class="player-text">Player Status 2</div>
+                </div>
+                <!-- Você pode adicionar mais status dinâmicos -->
+            </div>
+        </body>
+        </html>
