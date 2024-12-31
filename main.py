@@ -2,38 +2,15 @@ from flask import Flask, render_template_string, render_template, url_for, jsoni
 from scipy.sparse import dia
 
 from game.tools.colors import get_cor_vida, get_stamina_color
+from game.player import NewPlayer
+from game.world import NewWorld
+
 
 app = Flask(__name__)
 
+player = NewPlayer()
+world = NewWorld()
 
-class World:
-    def __init__(self, name: str = "World", map_name: str = "Mapa 1", ano: int = 2023, mes: int = 8, dia: int = 12,
-                 hora: int = 18, minuto: int = 37):
-        self.name = name
-        self.map_name = map_name
-        self.ano = ano
-        self.mes = mes
-        self.dia = dia
-        self.hora = hora
-        self.minuto = minuto
-
-
-class Player:
-    def __init__(self, name: str = "Rodrigo", health: int = 100, stamina: int = 100, sanity: int = 100,
-                 strength: int = 1, dexterity: int = 1, charisma: int = 1, intelligence: int = 1, local: str = "Omaan"):
-        self.name = name
-        self.health = health
-        self.stamina = stamina
-        self.sanity = sanity
-        self.strength = strength
-        self.dexterity = dexterity
-        self.charisma = charisma
-        self.intelligence = intelligence
-        self.local = local
-
-
-player = Player("Rodrigo", 90)
-world = World()
 
 def generate_full_html(player_status_html, midley_html, characters_present_html, map_html):
     """
@@ -68,7 +45,7 @@ def generate_full_html(player_status_html, midley_html, characters_present_html,
     """
 
 
-def generate_html_player_status(content, player: Player, url_img: str):
+def generate_html_player_status(content, player: NewPlayer, url_img: str):
     """
     Gera o conteúdo HTML para a caixa Player Status com a barra de vida e stamina.
     """
@@ -76,13 +53,19 @@ def generate_html_player_status(content, player: Player, url_img: str):
         f"<div class='player-text'>{item}</div>" for item in content
     )
     return f"""
-    <h4>{player.name.title()}</h4>
-    <h5>{player.local} {world.dia}/{world.mes}/{world.ano} {world.hora}:{world.minuto} $4121</h5>
+    <h4>{player.first_name.title()} {player.last_name.title()}</h4>
+    <div>
+        <ul class="thm-list">
+            <li>{player.title.title()}</li>
+            <li>{world.dia}/{world.mes}/{world.ano} {world.hora}:{world.minuto}</li>
+            <li>${player.money}</li>
+        </ul>
+    </div>
     <div class="player-box">
         <div class="player-image">
             <img src="{url_img}" alt="Imagem do jogador">
         </div>
-        <div>
+        <div class="player-info">
             <h4>Status</h4>
             <div 
                 class="health-bar" 
@@ -103,13 +86,20 @@ def generate_html_player_status(content, player: Player, url_img: str):
                 </div>
             </div>
         </div>
-        <div>
+        <div class="player-info">
             <h4>Effects</h4>
             <div>foo bar</div>
         </div>
-        <div>
+        <div class="player-info">
             <h4>Attributes</h4>
-            <div>strength: {player.strength} dexterity: {player.dexterity} charisma: {player.charisma} intelligence: {player.intelligence}</div>
+            <div>
+                <ul class="attributes-list">
+                    <li>Strength: {player.strength}</li>
+                    <li>Dexterity: {player.dexterity}</li>
+                    <li>Charisma: {player.charisma}</li>
+                    <li>Intelligence: {player.intelligence}</li>
+                </ul>
+            </div>
         </div>
     </div>
     """
@@ -141,7 +131,12 @@ def generate_html_map():
     """
     Gera o HTML para o quadrado do mapa.
     """
-    return "<div>Mapa do Jogo</div>"
+    formatted_content = "".join(f'<div class="map-inner-box">{i}</div>' for i in range(1, 50))
+    return f"""
+    <div class="map-outer-box">
+        {formatted_content}
+    </div>
+    """
 
 
 @app.route("/take_damage", methods=["POST"])
@@ -164,7 +159,6 @@ def index():
     # Conteúdo para os widgets
     midley_content = [f"Midley Item {i}" for i in range(10)]
     characters_content = [f"Character {i}" for i in range(50)]
-    map_content = "Este é o mapa"
 
     url_img = url_for('static', filename='img/test_img_player_200.png')
 

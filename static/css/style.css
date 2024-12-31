@@ -5,7 +5,7 @@ body {
     background-color: #2e2e2e;
     color: white;
     display: grid;
-    grid-template-columns: 2fr 3fr 2fr;
+    grid-template-columns: 3fr 5fr 2fr;
     grid-template-rows: 3fr 2fr;
     gap: 1rem;
     height: 100vh;
@@ -17,15 +17,6 @@ body {
     border-radius: 8px;
     padding: 10px;
     overflow: auto;
-}
-
-.map-box {
-    background-color: white;
-    color: black;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 /* Estilo das barras de scroll */
@@ -63,4 +54,78 @@ body {
 
 .damage-button:hover {
     background-color: #cc0000;
+}
+
+.player-info {
+    margin-bottom: 25px;
+}
+
+h4 {
+    margin-bottom: 2px
+}
+
+.attributes-list {
+    display: flex; /* Torna os itens flexíveis e os alinha na horizontal */
+    list-style-type: none; /* Remove os marcadores padrão da lista */
+    padding: 0;
+    margin: 0;
+    justify-content: space-between; /* Alinha itens centralizados, opcional */
+    gap: 10px; /* Espaçamento entre os itens, opcional */
+}
+
+.attributes-list li {
+    font-size: 15px;
+    padding: 5px 0px;
+    border-radius: 5px;
+}
+
+.thm-list {
+    display: flex; /* Torna os itens flexíveis e os alinha na horizontal */
+    list-style-type: none; /* Remove os marcadores padrão da lista */
+    padding: 0;
+    margin: 0;
+    justify-content: space-between; /* Alinha itens centralizados, opcional */
+    gap: 10px; /* Espaçamento entre os itens, opcional */
+}
+
+.thm-list li {
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px 5px 10px 0px;
+    border-radius: 5px;
+}
+
+/* ############# MAP ############# */
+
+.map-box {
+    background-color: #303030;
+    color: black;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Quadrado maior com bordas arredondadas */
+.map-outer-box {
+    width: 100%; /* Largura do quadrado maior */
+    height: 100%; /* Altura do quadrado maior */
+    border-radius: 1px; /* Bordas arredondadas */
+    display: grid; /* Usando Grid para disposição */
+    grid-template-columns: repeat(7, 1fr); /* 7 colunas */
+    grid-template-rows: repeat(7, 1fr); /* 7 linhas */
+    gap: 5px; /* Espaço entre os quadrados */
+    padding: 0px; /* Espaço interno ao redor dos quadrados */
+}
+
+/* Quadrados menores */
+.map-inner-box {
+    background-color: brown; /* Cor dos quadrados menores */
+    border-radius: 5px; /* Bordas arredondadas dos quadrados menores */
+    display: flex; /* Ativando Flexbox */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    font-size: 14px; /* Tamanho da fonte (opcional) */
+    color: white; /* Cor do texto */
+    font-family: Arial, sans-serif; /* Fonte do texto (opcional) */
 }
