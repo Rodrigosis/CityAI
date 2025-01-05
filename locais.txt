@@ -1,0 +1,39 @@
+    return [pos_00, pos_01, pos_02, pos_03, pos_04, pos_05, po32s_06,
+            pos_07, pos_08, pos_09, pos_10, pos_11, pos_12, pos_13,
+            pos_14, pos_15, pos_16, pos_17, pos_18, pos_19, pos_20,
+            pos_21, pos_22, pos_23, pos_24, pos_25, pos_26, pos_27,
+            pos_28, pos_29, pos_30, pos_31, pos_32, pos_33, pos_34,
+            pos_35, pos_36, pos_37, pos_38, pos_39, pos_40, pos_41,
+            pos_42, pos_43, pos_44, pos_45, pos_46, pos_47, pos_48]
+
+quero fazer um mapa que contenhan as estruturas a baixo, as regras são:
+
+1. cada estrutura deve estar ligada a uma rua
+2. cada rua deve estar conectada a outra rua
+3. o algoritimo deve conter um parametro de entrada que indica a quantidade de NPC's naquele mapa
+4. casa ponto do maps deve ser um objeto que contenha um id, nome e o id das estruturas acima abaixo a esquerda e a direita
+5. quando a estrutura não tiver nada ao lado o id do objeto de conter None
+6. o algoritimo dever criar esse maps de forma aleatória
+7. o maps não precisa ser 7x7, ele pode ser bem maior que isso
+8. preciso que o código contenhe um para que gere um html para eu visualizar o mapa
+
+estruturas:
+casa
+mansão
+predio residencial
+office
+hospital
+park
+shopping
+delegacia
+praia
+prisão
+academia
+fabrica
+Escola
+igreja
+bar
+bordel
+porto
+fazenda
+rua

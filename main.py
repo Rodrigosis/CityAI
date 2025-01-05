@@ -4,6 +4,7 @@ from scipy.sparse import dia
 from game.tools.colors import get_cor_vida, get_stamina_color
 from game.player import NewPlayer
 from game.world import NewWorld
+from game.map import gerar_mapa, create_mini_map, salvar_mapa_html
 
 
 app = Flask(__name__)
@@ -127,11 +128,27 @@ def generate_html_characters_present(content):
     """
 
 
-def generate_html_map():
+def generate_html_map(mapa, player):
     """
     Gera o HTML para o quadrado do mapa.
     """
-    formatted_content = "".join(f'<div class="map-inner-box">{i}</div>' for i in range(1, 50))
+    url_casa = url_for('static', filename='img/icon/casa.png')
+    url_rua = url_for('static', filename='img/icon/rua.png')
+
+    mini_map = create_mini_map(mapa, player.local_id)
+    formatted_content = ""
+    for local in mini_map:
+        block = f''
+        if local:
+            if local.nome == "rua":
+                block = f'<img class="local_id_{local.id}" src="{url_rua}" alt="icon rua">'
+                # block = f"{str(local.id)} ({local.nome.title()})"
+            else:
+                block = f'<img src="{url_casa}" alt="icon casa">'
+                # block = f"{str(local.id)} ({local.nome.title()})"
+
+        formatted_content += f'<div class="map-inner-box">{block}</div>'
+
     return f"""
     <div class="map-outer-box">
         {formatted_content}
@@ -149,8 +166,7 @@ def take_damage():
 @app.route("/take_stamina_damage", methods=["POST"])
 def take_stamina_damage():
     dano = request.json.get("damage", 0)  # Obter o dano do corpo da requisição
-    player.stamina = max(0, player.stamina - dano)
-    print(player.stamina)# Reduz a vida do jogador, garantindo que ela não fique negativa
+    player.stamina = max(0, player.stamina - dano)  # Reduz a vida do jogador, garantindo que ela não fique negativa
     new_color = get_stamina_color(player.stamina)
     return jsonify({"stamina": player.stamina, "color": new_color})  # Retorna a nova vida em JSON
 
@@ -166,7 +182,14 @@ def index():
     player_status_html = generate_html_player_status([], player, url_img)
     midley_html = generate_html_midley(midley_content)
     characters_present_html = generate_html_characters_present(characters_content)
-    map_html = generate_html_map()
+
+    # Configurações do mapa
+    largura_altura = 15  # Largura e Altura do mapa (colunas)
+
+    # Gerar o mapa
+    mapa_gerado = gerar_mapa(largura_altura)
+    map_html = generate_html_map(mapa_gerado, player)
+    salvar_mapa_html(mapa_gerado, "game/mapa.html")
 
     # Geração do HTML completo
     full_html = generate_full_html(player_status_html, midley_html, characters_present_html, map_html)
