@@ -12,6 +12,10 @@ app = Flask(__name__)
 player = NewPlayer()
 world = NewWorld()
 
+# Gerar o mapa
+largura_altura = 15  # Largura e Altura do mapa (colunas)
+mapa_gerado = gerar_mapa(largura_altura)
+
 
 def generate_full_html(player_status_html, midley_html, characters_present_html, map_html):
     """
@@ -138,16 +142,16 @@ def generate_html_map(mapa, player):
     mini_map = create_mini_map(mapa, player.local_id)
     formatted_content = ""
     for local in mini_map:
-        block = f''
+        block = f'<div class="map-inner-box"></div>'
         if local:
-            if local.nome == "rua":
-                block = f'<img class="local_id_{local.id}" src="{url_rua}" alt="icon rua">'
-                # block = f"{str(local.id)} ({local.nome.title()})"
-            else:
-                block = f'<img src="{url_casa}" alt="icon casa">'
-                # block = f"{str(local.id)} ({local.nome.title()})"
+            block = f'<button class="map-inner-box" onclick="updateMap({local.id})">{local.id}</button>'
 
-        formatted_content += f'<div class="map-inner-box">{block}</div>'
+            # if local.nome == "rua":
+            #     block = f'<button class="map-inner-box" onclick="updateMap({local.id})"><img class="local_id_{local.id}" src="{url_rua}" alt="icon rua"></button>'
+            # else:
+            #     block = f'<button class="map-inner-box" onclick="updateMap({local.id})"><img class="local_id_{local.id}" src="{url_casa}" alt="icon casa"></button>'
+
+        formatted_content += block
 
     return f"""
     <div class="map-outer-box">
@@ -170,6 +174,13 @@ def take_stamina_damage():
     new_color = get_stamina_color(player.stamina)
     return jsonify({"stamina": player.stamina, "color": new_color})  # Retorna a nova vida em JSON
 
+@app.route("/update_map", methods=["POST"])
+def update_map():
+    local_id = request.json.get("local_id", 0)  # Obter o dano do corpo da requisição
+    player.local_id = int(local_id)
+    new_map = generate_html_map(mapa_gerado, player)
+    return jsonify({"new-map":new_map})  # Retorna a nova vida em JSON
+
 @app.route("/")
 def index():
     # Conteúdo para os widgets
@@ -183,11 +194,6 @@ def index():
     midley_html = generate_html_midley(midley_content)
     characters_present_html = generate_html_characters_present(characters_content)
 
-    # Configurações do mapa
-    largura_altura = 15  # Largura e Altura do mapa (colunas)
-
-    # Gerar o mapa
-    mapa_gerado = gerar_mapa(largura_altura)
     map_html = generate_html_map(mapa_gerado, player)
     salvar_mapa_html(mapa_gerado, "game/mapa.html")
 

@@ -27,7 +27,7 @@ def find_local(map, local_id: int):
     local = None
     for linha in map:
         for ponto in linha:
-            if int(ponto.id) == local_id:
+            if ponto.id == local_id:
                 local = ponto
                 break
         if local:
@@ -37,7 +37,11 @@ def find_local(map, local_id: int):
 def create_mini_map(map, local_id_centro):
     def get_position(local, direction):
         """Função auxiliar para encontrar uma posição no mapa, se for válida."""
-        return find_local(map, getattr(local, direction)) if local and getattr(local, direction, None) else None
+        if local and getattr(local, direction, None) is not None:
+            local_id = getattr(local, direction)
+            return find_local(map, local_id)
+        else:
+            return None
 
     # Inicializa uma grade 7x7 com None (representando os 49 locais)
     mini_map = [[None for _ in range(7)] for _ in range(7)]

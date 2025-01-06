@@ -133,3 +133,10 @@ h4 {
 .map-inner-box img{
     width: 50%
 }
+
+.map-button {
+   height: 100%
+   background-color: brown; /* Cor dos quadrados menores */
+   border-radius: 5px; /* Bordas arredondadas dos quadrados menores */
+   border: 0px;
+}
