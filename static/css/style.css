@@ -140,3 +140,20 @@ h4 {
    border-radius: 5px; /* Bordas arredondadas dos quadrados menores */
    border: 0px;
 }
+
+.characters-container .clickable-box {
+    width: 100%; /* Garante que cada caixa ocupa 100% da largura da .characters-container */
+    box-sizing: border-box; /* Inclui padding e borda nos 100% de largura */
+    background-color: #2e2e2e; /* Cor de fundo para separar as caixas */
+    padding: 10px; /* Espaçamento dentro da caixa */
+    margin: 5px 0; /* Distância entre caixas */
+    cursor: pointer; /* Cursor de mão ao passar por cima */
+    text-align: left; /* Centraliza o texto dentro das caixas */
+    border: 1px solid #555; /* Adiciona uma borda leve */
+    border-radius: 5px; /* Bordas arredondadas */
+}
+
+/* Opção de hover para interação */
+.characters-container .clickable-box:hover {
+    background-color: #424242; /* Alteração da cor ao passar o mouse */
+}

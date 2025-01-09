@@ -1,5 +1,5 @@
-from flask import Flask, render_template_string, render_template, url_for, jsonify, request
-from scipy.sparse import dia
+import os
+from flask import Flask, render_template_string, url_for, jsonify, request
 
 from game.tools.colors import get_cor_vida, get_stamina_color
 from game.player import NewPlayer
@@ -21,14 +21,22 @@ def generate_full_html(player_status_html, midley_html, characters_present_html,
     """
     Gera o HTML contendo todas as 4 caixas no layout em grid.
     """
-    js_script_url = url_for('static', filename='js/playerFunctions.js')
     css_style_url = url_for('static', filename='css/style.css')
+
+    # Listar todos os arquivos da pasta 'static/js'
+    scripts_folder = os.path.join('static', 'js')
+    script_tags = ""
+    if os.path.exists(scripts_folder):
+        for script_name in os.listdir(scripts_folder):
+            if script_name.endswith('.js'):  # Apenas arquivos `.js`
+                script_url = url_for('static', filename=f'js/{script_name}')
+                script_tags += f'<script src="{script_url}"></script>\n'
 
     return f"""
     <html>
     <head>
         <link rel="stylesheet" href="{css_style_url}">
-        <script src="{js_script_url}"></script>
+        {script_tags}
     </head>
     <body>
         <div class="box" style="grid-column: 1; grid-row: span 2;">
@@ -125,10 +133,11 @@ def generate_html_characters_present(content):
     """
     Gera o conteúdo HTML para a caixa Characters Present.
     """
-    formatted_content = "".join(f"<div>{item}</div>" for item in content)
+    formatted_content = "".join(
+        f"<div class='clickable-box' onclick=\"openCharacter('{item}')\">{item}</div>" for item in content
+    )
     return f"""
-    <h3>Characters Present</h3>
-    <div>{formatted_content}</div>
+    <div class="characters-container">{formatted_content}</div>
     """
 
 
