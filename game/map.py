@@ -145,27 +145,6 @@ def gerar_mapa(largura_altura: int):
             id_counter += 1
         mapa.append(linha)
 
-    # # Garantir que todas as ruas estão conectadas
-    # for y in range(largura_altura):
-    #     for x in range(largura_altura):
-    #         ponto_atual = mapa[y][x]
-    #
-    #         # Se for uma estrutura e não houver ruas próximas, cria uma conexão com uma rua
-    #         if ponto_atual.nome != "rua":
-    #             vizinhos = []
-    #             if y > 0:
-    #                 vizinhos.append(mapa[y - 1][x])  # cima
-    #             if y < largura_altura - 1:
-    #                 vizinhos.append(mapa[y + 1][x])  # baixo
-    #             if x > 0:
-    #                 vizinhos.append(mapa[y][x - 1])  # esquerda
-    #             if x < largura_altura - 1:
-    #                 vizinhos.append(mapa[y][x + 1])  # direita
-    #
-    #             # Garante que cada estrutura está ligada a pelo menos uma rua
-    #             if all(vizinho.nome != "rua" for vizinho in vizinhos):
-    #                 random.choice(vizinhos).nome = "rua"
-
     # Conecta os IDs vizinhos
     for y in range(largura_altura):
         for x in range(largura_altura):
@@ -179,16 +158,6 @@ def gerar_mapa(largura_altura: int):
             if x < largura_altura - 1:
                 ponto_atual.direita = mapa[y][x + 1].id
 
-    # id_count = 0
-    # for a in range(largura_altura):
-    #     for b in range(largura_altura):
-    #         pos = calcular_vizinhos(largura_altura, a, b)
-    #         mapa[a][b].id = id_count
-    #         mapa[a][b].cima = pos["cima"]
-    #         mapa[a][b].baixo = pos["baixo"]
-    #         mapa[a][b].esquerda = pos["esquerda"]
-    #         mapa[a][b].direita = pos["direita"]
-    #         id_count += 1
     return mapa
 
 
@@ -246,21 +215,3 @@ def salvar_mapa_html(mapa, arquivo="mapa.html"):
     # Salva o HTML em um arquivo
     with open(arquivo, "w", encoding="utf-8") as f:
         f.write(conteudo_html)
-
-
-if __name__ == "__main__":
-    # Configurações do mapa
-    largura_altura = 15  # Largura e Altura do mapa (colunas)
-
-    # Gerar o mapa
-    mapa_gerado = gerar_mapa(largura_altura)
-
-    for i in mapa_gerado:
-        print(i)
-
-    # Salvar o mapa em um arquivo HTML
-    salvar_mapa_html(mapa_gerado, "mapa.html")
-
-    from game.player import NewPlayer
-    player = NewPlayer()
-    mini_map = create_mini_map(mapa_gerado, player.local_id)

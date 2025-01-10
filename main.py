@@ -15,6 +15,7 @@ world = NewWorld()
 # Gerar o mapa
 largura_altura = 15  # Largura e Altura do mapa (colunas)
 mapa_gerado = gerar_mapa(largura_altura)
+salvar_mapa_html(mapa_gerado, "game/mapa.html")
 
 
 def generate_full_html(player_status_html, midley_html, characters_present_html, map_html):
@@ -28,7 +29,7 @@ def generate_full_html(player_status_html, midley_html, characters_present_html,
     script_tags = ""
     if os.path.exists(scripts_folder):
         for script_name in os.listdir(scripts_folder):
-            if script_name.endswith('.js'):  # Apenas arquivos `.js`
+            if script_name.endswith('.js'):  # Apenas arquivos .js
                 script_url = url_for('static', filename=f'js/{script_name}')
                 script_tags += f'<script src="{script_url}"></script>\n'
 
@@ -204,7 +205,6 @@ def index():
     characters_present_html = generate_html_characters_present(characters_content)
 
     map_html = generate_html_map(mapa_gerado, player)
-    salvar_mapa_html(mapa_gerado, "game/mapa.html")
 
     # Geração do HTML completo
     full_html = generate_full_html(player_status_html, midley_html, characters_present_html, map_html)
